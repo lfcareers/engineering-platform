@@ -80,8 +80,6 @@
 
 	</dependencies>
 
-	<artifactId>postgresql</artifactId>
-
 	<build>
 		<plugins>
 			<plugin>

@@ -1,169 +1,259 @@
-.navbar {
-  border-bottom: 1px solid #dedede;
-  background: #ffffff;
+import './App.css'
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+
+import Home from './pages/Home'
+import Projects from './pages/Projects'
+import EngineeringLab from './pages/EngineeringLab'
+import Resume from './pages/Resume'
+import About from './pages/About'
+import Contact from './pages/Contact'
+
+.home-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
 }
 
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  min-height: 72px;
-
-  display: flex;
+.hero-section {
+  min-height: 720px;
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr;
+  gap: 80px;
   align-items: center;
-  justify-content: space-between;
+  padding: 100px 0;
 }
 
-.brand {
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+.hero-content {
+  max-width: 760px;
 }
 
-.nav-links {
-  display: flex;
-  gap: 28px;
-}
-
-.nav-links a {
-  font-size: 0.9rem;
-  color: #666;
-  transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-  color: #111;
-}
-
-.nav-links a.active {
-  color: #111;
-  font-weight: 600;
-}
-
-.page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 96px 24px;
-}
-
-.eyebrow {
-  font-size: 0.75rem;
+.hero-content h1 {
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  margin: 28px 0;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  margin-bottom: 20px;
 }
 
-.page h1 {
-  max-width: 800px;
-  margin: 0 0 24px;
-
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.page p {
-  max-width: 700px;
-  color: #666;
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.hero {
-  min-height: calc(100vh - 72px);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.hero h1 {
-  max-width: 900px;
-  margin: 0 0 28px;
-
-  font-size: clamp(3rem, 7vw, 6rem);
-  line-height: 0.98;
-  letter-spacing: -0.05em;
-}
-
-.hero-text {
+.hero-description {
   max-width: 650px;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   line-height: 1.7;
-  color: #666;
+  opacity: 0.7;
 }
 
 .hero-actions {
   display: flex;
-  gap: 12px;
-  margin-top: 32px;
+  gap: 16px;
+  margin-top: 36px;
 }
 
-.button {
-  padding: 13px 20px;
-  border: 1px solid #111;
-  background: #111;
-  color: #fff;
-  font-size: 0.9rem;
+.system-status-card {
+  min-width: 320px;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
   font-weight: 600;
 }
 
-.button.secondary {
-  background: transparent;
-  color: #111;
-}
-
-.footer {
-  border-top: 1px solid #dedede;
-  background: #ffffff;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-
+.status-row {
   display: flex;
   justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  font-size: 0.9rem;
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.content-section {
+  padding: 120px 0;
+}
+
+.section-heading {
+  margin-bottom: 48px;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+}
+
+.section-heading h2,
+.contact-section h2 {
+  max-width: 700px;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-top: 18px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.footer p {
-  margin: 0;
-  color: #777;
-  font-size: 0.8rem;
+.project-grid .card {
+  min-height: 320px;
 }
 
-@media (max-width: 800px) {
-  .nav-container {
-    align-items: flex-start;
-    flex-direction: column;
-    padding-top: 18px;
-    padding-bottom: 18px;
-    gap: 18px;
+.project-number {
+  font-family: monospace;
+  opacity: 0.4;
+  margin-bottom: 60px;
+}
+
+.project-grid h3 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.project-grid p {
+  line-height: 1.6;
+  opacity: 0.65;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.approach-section {
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.engineering-process {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  font-family: monospace;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.contact-section {
+  padding: 140px 0;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.contact-section p {
+  max-width: 500px;
+  margin: 24px 0 32px;
+  font-size: 1.1rem;
+  opacity: 0.65;
+}
+
+@media (max-width: 900px) {
+
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 50px;
   }
 
-  .nav-links {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 14px 20px;
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 
-  .page {
-    padding: 64px 20px;
+}
+
+@media (max-width: 600px) {
+
+  .home-page {
+    padding: 0 20px;
   }
 
-  .hero {
+  .hero-section {
     min-height: auto;
-    padding: 80px 0;
+    padding: 70px 0;
+  }
+
+  .hero-content h1 {
+    font-size: 4rem;
   }
 
   .hero-actions {
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .footer-container {
-    flex-direction: column;
+  .hero-actions button {
+    width: 100%;
   }
+
+  .content-section {
+    padding: 80px 0;
+  }
+
+  .engineering-process {
+    line-height: 2;
+  }
+
+  .site-header {
+    width: 100%;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  }
+
+  .site-navbar {
+    width: 100%;
+    max-width: 1400px;
+    min-height: 72px;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+  }
+
+  .nav-links a.active {
+    opacity: 1;
+  }
+
+  @media (max-width: 800px) {
+    .site-navbar {
+      padding: 0 20px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+  }
+
 }
