@@ -1,4 +1,5 @@
 import './Resume.css'
+import { Link } from 'react-router-dom'
 
 const experience = [
   {
@@ -79,12 +80,12 @@ function Resume() {
               View PDF Resume
             </a>
 
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="resume-secondary-button"
             >
               Contact Me
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -238,9 +239,9 @@ function Resume() {
           and technical leadership opportunities.
         </p>
 
-        <a href="/contact" className="resume-primary-button">
+        <Link to="/contact" className="resume-primary-button">
           Start a Conversation →
-        </a>
+        </Link>
       </section>
 
     </main>
