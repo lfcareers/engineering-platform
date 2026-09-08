@@ -1,5 +1,5 @@
 import './Resume.css'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const experience = [
   {
@@ -48,6 +48,7 @@ const skills = [
 ]
 
 function Resume() {
+  const navigate = useNavigate()
   return (
     <main className="resume-page">
 
@@ -71,22 +72,23 @@ function Resume() {
           </div>
 
           <div className="resume-actions">
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               className="resume-primary-button"
+              onClick={() => window.open('/resume.pdf', '_blank')}
             >
               View PDF Resume
-            </a>
+            </button>
 
-            <Link
-              to="/contact"
-              className="resume-secondary-button"
-            >
-              Contact Me
-            </Link>
-          </div>
+
+            <button
+                type="button"
+                className="resume-secondary-button"
+                onClick={() => navigate('/contact')}
+              >
+                Contact Me
+              </button>
+            </div>
         </div>
       </section>
 
@@ -239,9 +241,13 @@ function Resume() {
           and technical leadership opportunities.
         </p>
 
-        <Link to="/contact" className="resume-primary-button">
+        <button
+          type="button"
+          className="resume-primary-button"
+          onClick={() => navigate('/contact')}
+        >
           Start a Conversation →
-        </Link>
+        </button>
       </section>
 
     </main>
