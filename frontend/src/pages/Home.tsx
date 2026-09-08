@@ -8,7 +8,7 @@ function Home() {
       <section className="hero-section">
         <div className="hero-content">
 
-          <Chip variant="flat">
+          <Chip variant="soft">
             SOFTWARE • SYSTEMS • DATA • AUTOMATION
           </Chip>
 
@@ -48,7 +48,7 @@ function Home() {
             <div>
             <div className="status-header">
               <span>SYSTEM STATUS</span>
-              <Chip size="sm" color="success" variant="flat">
+              <Chip size="sm" color="success" variant="soft">
                 ONLINE
               </Chip>
             </div>
