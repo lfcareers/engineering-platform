@@ -6,7 +6,7 @@ const experience = [
     company: 'Universal Orlando Resort',
     role: 'Security Operations / Systems Support',
     description:
-      'Supported large-scale park operations through incident coordination, access control, radio communications, safety procedures, and operational documentation across high-volume entertainment environments.',
+      'Collaborated with Universal Creative, engineering teams, operations, and cross-functional stakeholders to support the delivery, safety, and operational readiness of Epic Universe, a $7 billion infrastructure project, incorporating stakeholder feedback to improve processes and operational outcomes.',
     skills: ['Operations', 'Access Control', 'Systems', 'Documentation'],
   },
   {
