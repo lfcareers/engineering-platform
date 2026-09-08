@@ -1,15 +1,12 @@
-import './App.css'
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import EngineeringLab from './pages/EngineeringLab'
-import Resume from './pages/Resume'
-import About from './pages/About'
-import Contact from './pages/Contact'
+.content {
+  flex: 1;
+}
 
 .home-page {
   max-width: 1400px;
@@ -158,8 +155,47 @@ import Contact from './pages/Contact'
   opacity: 0.65;
 }
 
-@media (max-width: 900px) {
+.site-header {
+  width: 100%;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
 
+.site-navbar {
+  width: 100%;
+  max-width: 1400px;
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
   .hero-section {
     grid-template-columns: 1fr;
     gap: 50px;
@@ -168,11 +204,19 @@ import Contact from './pages/Contact'
   .project-grid {
     grid-template-columns: 1fr;
   }
+}
 
+@media (max-width: 800px) {
+  .site-navbar {
+    padding: 0 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
-
   .home-page {
     padding: 0 20px;
   }
@@ -201,59 +245,4 @@ import Contact from './pages/Contact'
   .engineering-process {
     line-height: 2;
   }
-
-  .site-header {
-    width: 100%;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-  }
-
-  .site-navbar {
-    width: 100%;
-    max-width: 1400px;
-    min-height: 72px;
-    margin: 0 auto;
-    padding: 0 32px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .brand {
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.65;
-    transition: opacity 0.2s ease;
-  }
-
-  .nav-links a:hover {
-    opacity: 1;
-  }
-
-  .nav-links a.active {
-    opacity: 1;
-  }
-
-  @media (max-width: 800px) {
-    .site-navbar {
-      padding: 0 20px;
-    }
-
-    .nav-links {
-      display: none;
-    }
-  }
-
 }

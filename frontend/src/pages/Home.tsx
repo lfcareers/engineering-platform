@@ -21,7 +21,7 @@ function Home() {
 
           <div className="hero-actions">
             <Button
-              color="primary"
+              variant="primary"
               size="lg"
               onPress={() => {
                 window.location.href = '/projects'
@@ -31,7 +31,7 @@ function Home() {
             </Button>
 
             <Button
-              variant="bordered"
+              variant="outline"
               size="lg"
               onPress={() => {
                 window.location.href = '/resume'
@@ -45,10 +45,14 @@ function Home() {
 
         {/* SYSTEM STATUS */}
         <Card>
-            <div>
+          <div>
             <div className="status-header">
               <span>SYSTEM STATUS</span>
-              <Chip size="sm" color="success" variant="soft">
+
+              <Chip
+                size="sm"
+                variant="soft"
+              >
                 ONLINE
               </Chip>
             </div>
@@ -165,7 +169,6 @@ function Home() {
         </div>
 
         <div className="engineering-process">
-
           <span>DEFINE</span>
           <span>→</span>
           <span>DESIGN</span>
@@ -177,7 +180,6 @@ function Home() {
           <span>DOCUMENT</span>
           <span>→</span>
           <span>IMPROVE</span>
-
         </div>
 
       </section>
@@ -198,7 +200,7 @@ function Home() {
         </p>
 
         <Button
-          color="primary"
+          variant="primary"
           size="lg"
           onPress={() => {
             window.location.href = '/contact'
