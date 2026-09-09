@@ -1,4 +1,4 @@
-package com.loganfoster.engineering_platform.contact;
+package com.loganfoster.engineering_platform.controller.contact;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

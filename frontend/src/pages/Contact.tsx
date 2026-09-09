@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_BASE_URL } from '../config'
 import './Contact.css'
 
 function Contact() {
@@ -6,9 +7,14 @@ function Contact() {
     name: '',
     email: '',
     organization: '',
-    subject: '',
+    topic: '',
     message: '',
   })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<
+    'idle' | 'success' | 'error'
+  >('idle')
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -23,10 +29,45 @@ function Contact() {
     }))
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault()
 
-    console.log('Contact form:', formData)
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/contact`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('Unable to send message')
+      }
+
+      setSubmitStatus('success')
+
+      setFormData({
+        name: '',
+        email: '',
+        organization: '',
+        topic: '',
+        message: '',
+      })
+    } catch (error) {
+      console.error('Contact form error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -56,7 +97,9 @@ function Contact() {
         {/* LEFT SIDE */}
         <div className="contact-information">
 
-          <span className="contact-label">01 / CONTACT</span>
+          <span className="contact-label">
+            01 / CONTACT
+          </span>
 
           <h2>
             Have something
@@ -147,14 +190,14 @@ function Contact() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="subject">
+            <label htmlFor="topic">
               WHAT WOULD YOU LIKE TO DISCUSS?
             </label>
 
             <select
-              id="subject"
-              name="subject"
-              value={formData.subject}
+              id="topic"
+              name="topic"
+              value={formData.topic}
               onChange={handleChange}
               required
             >
@@ -206,10 +249,28 @@ function Contact() {
               to your message.
             </p>
 
-            <button type="submit">
-              Send Message →
+            <button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? 'Sending...'
+                : 'Send Message →'}
             </button>
           </div>
+
+          {submitStatus === 'success' && (
+            <p>
+              Message sent successfully. Thank you for reaching out.
+            </p>
+          )}
+
+          {submitStatus === 'error' && (
+            <p>
+              Something went wrong while sending your message.
+              Please try again.
+            </p>
+          )}
 
         </form>
 

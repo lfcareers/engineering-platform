@@ -1,4 +1,4 @@
-package com.loganfoster.engineering_platform.contact;
+package com.loganfoster.engineering_platform.controller.contact;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
