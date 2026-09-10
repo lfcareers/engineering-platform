@@ -11,18 +11,17 @@
   background:
     linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.96) 0%,
-      rgba(15, 23, 42, 0.88) 100%
+      color-mix(in srgb, var(--bg-surface) 94%, transparent),
+      color-mix(in srgb, var(--bg-page) 90%, transparent)
     );
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
-  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  border-bottom: 1px solid var(--border);
 
   box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.18),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.025);
+    0 8px 30px rgba(0, 0, 0, 0.14);
 }
 
 
@@ -49,45 +48,33 @@
 ========================= */
 
 .brand {
-  position: relative;
-
-  display: inline-flex;
-  align-items: center;
-
-  color: #f8fafc;
-
-  font-size: 1.2rem;
-  font-weight: 750;
-  letter-spacing: -0.02em;
-
-  text-decoration: none;
-  white-space: nowrap;
-
-  transition:
-    transform 0.2s ease,
-    color 0.2s ease;
+  color: var(--text-primary);
 }
 
-.brand::before {
-  content: "";
+.nav-links a {
+  color: var(--text-secondary);
+}
 
-  width: 10px;
-  height: 10px;
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-primary);
+}
 
-  margin-right: 10px;
-
-  border-radius: 50%;
-
-  background: #22c55e;
+.nav-links a.active {
+  background:
+    color-mix(in srgb, var(--accent) 12%, transparent);
 
   box-shadow:
-    0 0 8px rgba(34, 197, 94, 0.9),
-    0 0 18px rgba(34, 197, 94, 0.45);
+    inset 0 0 0 1px
+    color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
-.brand:hover {
-  color: #ffffff;
-  transform: translateY(-1px);
+.nav-links a.active::after {
+  background: var(--accent);
+
+  box-shadow:
+    0 0 8px
+    color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 

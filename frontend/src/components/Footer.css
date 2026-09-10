@@ -6,14 +6,14 @@
   background:
     linear-gradient(
       180deg,
-      rgba(15, 23, 42, 0.92),
-      rgba(8, 15, 28, 0.98)
+      var(--bg-surface),
+      var(--bg-page)
     );
 
-  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  border-top: 1px solid var(--border);
 
   box-shadow:
-    0 -15px 40px rgba(0, 0, 0, 0.18);
+    0 -15px 40px rgba(0, 0, 0, 0.16);
 }
 
 .footer-container {
@@ -36,18 +36,23 @@
 }
 
 .footer-eyebrow {
-  font-size: 0.75rem;
-  font-weight: 700;
-
-  letter-spacing: 0.16em;
-
-  color: #60a5fa;
+  color: var(--accent);
 }
 
-.footer-subtitle {
-  font-size: 0.9rem;
+.footer-subtitle,
+.status-label,
+.footer-links a,
+.copyright {
+  color: var(--text-muted);
+}
 
-  color: #64748b;
+.status-title {
+  color: var(--text-secondary);
+}
+
+.status-value,
+.footer-brand {
+  color: var(--text-primary);
 }
 
 
@@ -347,11 +352,14 @@
 @media (max-width: 900px) {
 
   .footer-status-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    background:
+      color-mix(
+        in srgb,
+        var(--bg-elevated) 88%,
+        transparent
+      );
 
-    padding-bottom: 34px;
+    border: 1px solid var(--border);
   }
 
   .footer-bottom {
