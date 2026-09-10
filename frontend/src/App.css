@@ -1,4 +1,23 @@
 /* =========================
+   DESIGN SYSTEM
+   ========================= */
+
+:root {
+  --background: #0b1020;
+  --surface: #121a2b;
+  --surface-elevated: #182238;
+
+  --primary: #4f8cff;
+  --secondary: #7c3aed;
+  --success: #22c55e;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+
+  --border: rgba(148, 163, 184, 0.16);
+}
+
+/* =========================
    APPLICATION SHELL
    ========================= */
 
@@ -8,62 +27,25 @@
   flex-direction: column;
   position: relative;
 
+  color: var(--text-secondary);
+
   background:
     radial-gradient(
       circle at 15% 10%,
-      rgba(59, 130, 246, 0.08),
-      transparent 28%
+      rgba(79, 140, 255, 0.18),
+      transparent 30%
     ),
     radial-gradient(
       circle at 85% 25%,
-      rgba(99, 102, 241, 0.06),
-      transparent 30%
+      rgba(124, 58, 237, 0.14),
+      transparent 32%
     ),
     linear-gradient(
       180deg,
-      #ffffff 0%,
-      #f8fafc 50%,
-      #ffffff 100%
+      #0b1020 0%,
+      #0e1528 50%,
+      #0b1020 100%
     );
-}
-
-.content {
-  flex: 1;
-}
-
-.app-shell::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-
-  background-image:
-    linear-gradient(
-      rgba(15, 23, 42, 0.025) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(15, 23, 42, 0.025) 1px,
-      transparent 1px
-    );
-
-  background-size: 48px 48px;
-
-  mask-image: linear-gradient(
-    to bottom,
-    black,
-    transparent 75%
-  );
-
-  z-index: 0;
-}
-
-.content,
-.site-header {
-  position: relative;
-  z-index: 1;
 }
 
 
@@ -145,7 +127,7 @@
 
   padding: 14px 0;
 
-  border-bottom: 1px solid rgba(128, 128, 128, 0.16);
+  border-bottom: 1px solid var(--border);
 
   font-size: 0.9rem;
 }
@@ -160,7 +142,7 @@
 .content-section {
   padding: 110px 0;
 
-  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  border-top: 1px solid var(--border);
 }
 
 .section-heading {
