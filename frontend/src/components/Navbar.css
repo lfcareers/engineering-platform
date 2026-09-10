@@ -1,59 +1,212 @@
 /* =========================
    HEADER
-   ========================= */
+========================= */
 
 .site-header {
   width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.96) 0%,
+      rgba(15, 23, 42, 0.88) 100%
+    );
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.025);
 }
 
+
+/* =========================
+   NAVBAR
+========================= */
+
 .site-navbar {
+  width: min(100% - 48px, 1440px);
+  min-height: 82px;
+
+  margin: 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  gap: 32px;
 }
 
 
 /* =========================
    BRAND
-   ========================= */
+========================= */
 
 .brand {
-  color: inherit;
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: #f8fafc;
+
+  font-size: 1.2rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+
   text-decoration: none;
   white-space: nowrap;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.brand::before {
+  content: "";
+
+  width: 10px;
+  height: 10px;
+
+  margin-right: 10px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 8px rgba(34, 197, 94, 0.9),
+    0 0 18px rgba(34, 197, 94, 0.45);
+}
+
+.brand:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 
 /* =========================
    DESKTOP NAVIGATION
-   ========================= */
+========================= */
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+
+  gap: 6px;
+
+  padding: 5px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .nav-links a {
-  color: inherit;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 15px;
+
+  border-radius: 10px;
+
+  color: #cbd5e1;
+
+  font-size: 0.94rem;
+  font-weight: 550;
+
   text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* Hover */
+
+.nav-links a:hover {
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  transform: translateY(-1px);
+}
+
+
+/* React Router active route */
+
+.nav-links a.active {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.18),
+      rgba(99, 102, 241, 0.12)
+    );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(96, 165, 250, 0.16),
+    0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Small active indicator */
+
+.nav-links a.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 4px;
+
+  width: 16px;
+  height: 2px;
+
+  transform: translateX(-50%);
+
+  border-radius: 100px;
+
+  background: #60a5fa;
+
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.65);
 }
 
 
 /* =========================
    HAMBURGER BUTTON
-   ========================= */
+========================= */
 
 .menu-toggle {
   display: none;
 
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
+
   padding: 8px;
 
-  border: none;
-  background: transparent;
-  color: inherit;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: #f8fafc;
 
   cursor: pointer;
 
@@ -62,6 +215,19 @@
   justify-content: center;
 
   gap: 5px;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  border-color: rgba(255, 255, 255, 0.14);
+
+  transform: translateY(-1px);
 }
 
 .menu-toggle span {
@@ -71,6 +237,7 @@
   height: 2px;
 
   background: currentColor;
+
   border-radius: 2px;
 
   transition:
@@ -81,7 +248,7 @@
 
 /* =========================
    MOBILE NAVIGATION
-   ========================= */
+========================= */
 
 .mobile-nav {
   display: none;
@@ -90,9 +257,15 @@
 
 /* =========================
    MOBILE BREAKPOINT
-   ========================= */
+========================= */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+
+  .site-navbar {
+    width: min(100% - 32px, 1440px);
+    min-height: 74px;
+  }
+
   .nav-links {
     display: none;
   }
@@ -105,18 +278,40 @@
     display: flex;
     flex-direction: column;
 
-    padding: 10px 24px 20px;
+    padding: 8px 20px 18px;
 
-    border-top: 1px solid rgba(128, 128, 128, 0.18);
+    background: rgba(15, 23, 42, 0.96);
+
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
   }
 
   .mobile-nav a {
-    padding: 15px 0;
+    position: relative;
 
-    color: inherit;
+    padding: 15px 12px;
+
+    border-radius: 9px;
+
+    color: #cbd5e1;
+
+    font-weight: 550;
+
     text-decoration: none;
 
-    border-bottom: 1px solid rgba(128, 128, 128, 0.12);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a.active {
+    color: #ffffff;
+
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .mobile-nav a:last-child {
@@ -136,5 +331,21 @@
 
   .menu-toggle.open span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .site-navbar {
+    width: min(100% - 24px, 1440px);
+  }
+
+  .brand {
+    font-size: 1.05rem;
   }
 }
