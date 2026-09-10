@@ -14,7 +14,7 @@ export default function Footer() {
 
         <div className="footer-status-grid">
 
-          <div className="status-item">
+          <div className="status-item market-card">
             <span className="status-label">MARKETS</span>
             <span className="status-title">SPY</span>
             <span className="status-value">
@@ -22,13 +22,13 @@ export default function Footer() {
             </span>
           </div>
 
-          <div className="status-item">
+          <div className="status-item weather-card">
             <span className="status-label">WEATHER</span>
             <span className="status-title">Orlando</span>
             <span className="status-value">82°F · Clear</span>
           </div>
 
-          <div className="status-item">
+          <div className="status-item platform-card">
             <span className="status-label">PLATFORM</span>
             <span className="status-title">API</span>
 
@@ -38,7 +38,7 @@ export default function Footer() {
             </span>
           </div>
 
-          <div className="status-item">
+          <div className="status-item build-card">
             <span className="status-label">BUILD</span>
             <span className="status-title">Production</span>
             <span className="status-value">✓ Passing</span>
