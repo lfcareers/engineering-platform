@@ -3,70 +3,84 @@
    ========================= */
 
 /* =========================
-   DESIGN SYSTEM
+   GLOBAL THEME
    ========================= */
 
 :root {
-  --background: #f8fafc;
-  --surface: #ffffff;
-  --surface-elevated: #f1f5f9;
+  color-scheme: light dark;
 
-  --primary: #2563eb;
-  --secondary: #7c3aed;
-  --success: #16a34a;
+  --bg-page: #ffffff;
+  --bg-surface: #f7f7f5;
+  --bg-elevated: #ffffff;
 
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
+  --text-primary: #111111;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
 
-  --border: rgba(15, 23, 42, 0.12);
+  --accent: #f5c518;
+  --border: rgba(17, 17, 17, 0.10);
 }
-
-
-/* =========================
-   DEVICE DARK MODE
-   ========================= */
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0b1020;
-    --surface: #121a2b;
-    --surface-elevated: #182238;
-
-    --primary: #4f8cff;
-    --secondary: #7c3aed;
-    --success: #22c55e;
+    --bg-page: #0a0a0a;
+    --bg-surface: #121212;
+    --bg-elevated: #181818;
 
     --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
 
-    --border: rgba(148, 163, 184, 0.16);
+    --accent: #f5c518;
+    --border: rgba(255, 255, 255, 0.10);
   }
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+body {
+  margin: 0;
 }
 
 /* =========================
    APPLICATION SHELL
    ========================= */
 
-@media (prefers-color-scheme: dark) {
-  .app-shell {
-    background:
-      radial-gradient(
-        circle at 15% 10%,
-        rgba(79, 140, 255, 0.18),
-        transparent 30%
-      ),
-      radial-gradient(
-        circle at 85% 25%,
-        rgba(124, 58, 237, 0.14),
-        transparent 32%
-      ),
-      linear-gradient(
-        180deg,
-        #0b1020 0%,
-        #0e1528 50%,
-        #0b1020 100%
-      );
-  }
+.app-shell {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--bg-page);
+  color: var(--text-primary);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+}
+
+p,
+li {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
 }
 
 
@@ -195,12 +209,9 @@
   gap: 20px;
 }
 
-.project-grid > * {
-  min-height: 300px;
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+.project-grid > *,
+.status-row {
+  color: var(--text-primary);
 }
 
 .project-grid > *:hover {
@@ -263,10 +274,9 @@
 
 /* CONTACT CTA */
 
+.content-section,
 .contact-section {
-  padding: 120px 0 140px;
-
-  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  background: var(--bg-page);
 }
 
 .contact-section p {
