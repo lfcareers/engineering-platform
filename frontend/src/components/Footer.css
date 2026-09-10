@@ -139,6 +139,14 @@
   color: #22c55e;
 }
 
+.negative {
+  margin-left: 6px;
+
+  font-size: 0.8rem;
+
+  color: #ef4444;
+}
+
 
 /* HEALTH */
 

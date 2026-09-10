@@ -1,0 +1,357 @@
+warning: in the working copy of 'backend/src/main/resources/application.properties', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'frontend/vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/backend/src/main/java/com/loganfoster/engineering_platform/controller/MarketController.java b/backend/src/main/java/com/loganfoster/engineering_platform/controller/MarketController.java[m
+[1mindex dcff501..8ae6e91 100644[m
+[1m--- a/backend/src/main/java/com/loganfoster/engineering_platform/controller/MarketController.java[m
+[1m+++ b/backend/src/main/java/com/loganfoster/engineering_platform/controller/MarketController.java[m
+[36m@@ -1,2 +1,32 @@[m
+[31m-package com.loganfoster.engineering_platform.controller;public class MarketController {[m
+[31m-}[m
+[32m+[m[32mpackage YOUR_PACKAGE.controller;[m
+[32m+[m
+[32m+[m[32mimport org.springframework.beans.factory.annotation.Value;[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.*;[m
+[32m+[m[32mimport org.springframework.web.client.RestClient;[m
+[32m+[m
+[32m+[m[32m@RestController[m
+[32m+[m[32m@RequestMapping("/api/markets")[m
+[32m+[m[32mpublic class MarketController {[m
+[32m+[m
+[32m+[m[32m    private final RestClient restClient = RestClient.create();[m
+[32m+[m
+[32m+[m[32m    @Value("${twelvedata.api.key}")[m
+[32m+[m[32m    private String apiKey;[m
+[32m+[m
+[32m+[m[32m    @GetMapping("/{symbol}")[m
+[32m+[m[32m    public String getQuote([m
+[32m+[m[32m            @PathVariable String symbol[m
+[32m+[m[32m    ) {[m
+[32m+[m
+[32m+[m[32m        String url =[m
+[32m+[m[32m                "https://api.twelvedata.com/quote"[m
+[32m+[m[32m                        + "?symbol=" + symbol[m
+[32m+[m[32m                        + "&apikey=" + apiKey;[m
+[32m+[m
+[32m+[m[32m        return restClient[m
+[32m+[m[32m                .get()[m
+[32m+[m[32m                .uri(url)[m
+[32m+[m[32m                .retrieve()[m
+[32m+[m[32m                .body(String.class);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/src/main/java/com/loganfoster/engineering_platform/controller/WeatherController.java b/backend/src/main/java/com/loganfoster/engineering_platform/controller/WeatherController.java[m
+[1mindex 49df6a7..6e5f473 100644[m
+[1m--- a/backend/src/main/java/com/loganfoster/engineering_platform/controller/WeatherController.java[m
+[1m+++ b/backend/src/main/java/com/loganfoster/engineering_platform/controller/WeatherController.java[m
+[36m@@ -1,2 +1,34 @@[m
+[31m-package com.loganfoster.engineering_platform.controller;public class WeatherController {[m
+[31m-}[m
+[32m+[m[32mpackage com.loganfoster.engineering_platform.controller;[m
+[32m+[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.GetMapping;[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.RequestMapping;[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.RequestParam;[m
+[32m+[m[32mimport org.springframework.web.bind.annotation.RestController;[m
+[32m+[m[32mimport org.springframework.web.client.RestClient;[m
+[32m+[m
+[32m+[m[32m@RestController[m
+[32m+[m[32m@RequestMapping("/api/weather")[m
+[32m+[m[32mpublic class WeatherController {[m
+[32m+[m
+[32m+[m[32m    private final RestClient restClient = RestClient.create();[m
+[32m+[m
+[32m+[m[32m    @GetMapping[m
+[32m+[m[32m    public String getWeather([m
+[32m+[m[32m            @RequestParam double lat,[m
+[32m+[m[32m            @RequestParam double lon[m
+[32m+[m[32m    ) {[m
+[32m+[m
+[32m+[m[32m        String url =[m
+[32m+[m[32m                "https://api.open-meteo.com/v1/forecast"[m
+[32m+[m[32m                        + "?latitude=" + lat[m
+[32m+[m[32m                        + "&longitude=" + lon[m
+[32m+[m[32m                        + "&current=temperature_2m,weather_code"[m
+[32m+[m[32m                        + "&temperature_unit=fahrenheit";[m
+[32m+[m
+[32m+[m[32m        return restClient[m
+[32m+[m[32m                .get()[m
+[32m+[m[32m                .uri(url)[m
+[32m+[m[32m                .retrieve()[m
+[32m+[m[32m                .body(String.class);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/backend/src/main/resources/application.properties b/backend/src/main/resources/application.properties[m
+[1mindex ce39af6..5eca19a 100644[m
+[1m--- a/backend/src/main/resources/application.properties[m
+[1m+++ b/backend/src/main/resources/application.properties[m
+[36m@@ -11,4 +11,7 @@[m [mspring.datasource.password=${SPRING_DATASOURCE_PASSWORD}[m
+ # JPA / Hibernate[m
+ spring.jpa.hibernate.ddl-auto=update[m
+ spring.jpa.show-sql=true[m
+[31m-spring.jpa.properties.hibernate.format_sql=true[m
+\ No newline at end of file[m
+[32m+[m[32mspring.jpa.properties.hibernate.format_sql=true[m
+[32m+[m
+[32m+[m[32m#Twelvedata API[m
+[32m+[m[32mtwelvedata.api.key=${TWELVEDATA_API_KEY}[m
+\ No newline at end of file[m
+[1mdiff --git a/frontend/src/components/Footer.css b/frontend/src/components/Footer.css[m
+[1mindex 089caf7..af9838f 100644[m
+[1m--- a/frontend/src/components/Footer.css[m
+[1m+++ b/frontend/src/components/Footer.css[m
+[36m@@ -139,6 +139,14 @@[m
+   color: #22c55e;[m
+ }[m
+ [m
+[32m+[m[32m.negative {[m
+[32m+[m[32m  margin-left: 6px;[m
+[32m+[m
+[32m+[m[32m  font-size: 0.8rem;[m
+[32m+[m
+[32m+[m[32m  color: #ef4444;[m
+[32m+[m[32m}[m
+[32m+[m
+ [m
+ /* HEALTH */[m
+ [m
+[1mdiff --git a/frontend/src/components/Footer.tsx b/frontend/src/components/Footer.tsx[m
+[1mindex 93031e4..6a5ae15 100644[m
+[1m--- a/frontend/src/components/Footer.tsx[m
+[1m+++ b/frontend/src/components/Footer.tsx[m
+[36m@@ -1,12 +1,98 @@[m
+[32m+[m[32mimport { useEffect, useState } from "react";[m
+ import "./Footer.css";[m
+ [m
+[32m+[m[32mtype WeatherData = {[m
+[32m+[m[32m  current: {[m
+[32m+[m[32m    temperature_2m: number;[m
+[32m+[m[32m    weather_code: number;[m
+[32m+[m[32m  };[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32mtype MarketData = {[m
+[32m+[m[32m  symbol?: string;[m
+[32m+[m[32m  close?: string;[m
+[32m+[m[32m  price?: string;[m
+[32m+[m[32m  percent_change?: string;[m
+[32m+[m[32m  change?: string;[m
+[32m+[m[32m};[m
+[32m+[m
+ export default function Footer() {[m
+[32m+[m[32m  const [weather, setWeather] = useState<WeatherData | null>(null);[m
+[32m+[m[32m  const [weatherError, setWeatherError] = useState(false);[m
+[32m+[m
+[32m+[m[32m  const [market, setMarket] = useState<MarketData | null>(null);[m
+[32m+[m[32m  const [marketError, setMarketError] = useState(false);[m
+[32m+[m
+[32m+[m[32m  /*[m
+[32m+[m[32m   * LOCAL WEATHER[m
+[32m+[m[32m   */[m
+[32m+[m[32m  useEffect(() => {[m
+[32m+[m[32m    if (!navigator.geolocation) {[m
+[32m+[m[32m      setWeatherError(true);[m
+[32m+[m[32m      return;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    navigator.geolocation.getCurrentPosition([m
+[32m+[m[32m      (position) => {[m
+[32m+[m[32m        const lat = position.coords.latitude;[m
+[32m+[m[32m        const lon = position.coords.longitude;[m
+[32m+[m
+[32m+[m[32m        fetch(`/api/weather?lat=${lat}&lon=${lon}`)[m
+[32m+[m[32m          .then((response) => {[m
+[32m+[m[32m            if (!response.ok) {[m
+[32m+[m[32m              throw new Error("Weather request failed");[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m            return response.json();[m
+[32m+[m[32m          })[m
+[32m+[m[32m          .then((data) => {[m
+[32m+[m[32m            setWeather(data);[m
+[32m+[m[32m          })[m
+[32m+[m[32m          .catch((error) => {[m
+[32m+[m[32m            console.error("Weather error:", error);[m
+[32m+[m[32m            setWeatherError(true);[m
+[32m+[m[32m          });[m
+[32m+[m[32m      },[m
+[32m+[m
+[32m+[m[32m      (error) => {[m
+[32m+[m[32m        console.error("Location error:", error);[m
+[32m+[m[32m        setWeatherError(true);[m
+[32m+[m[32m      }[m
+[32m+[m[32m    );[m
+[32m+[m[32m  }, []);[m
+[32m+[m
+[32m+[m[32m  /*[m
+[32m+[m[32m   * SPY MARKET DATA[m
+[32m+[m[32m   */[m
+[32m+[m[32m  useEffect(() => {[m
+[32m+[m[32m    fetch("/api/markets/SPY")[m
+[32m+[m[32m      .then((response) => {[m
+[32m+[m[32m        if (!response.ok) {[m
+[32m+[m[32m          throw new Error("Market request failed");[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        return response.json();[m
+[32m+[m[32m      })[m
+[32m+[m[32m      .then((data) => {[m
+[32m+[m[32m        setMarket(data);[m
+[32m+[m[32m      })[m
+[32m+[m[32m      .catch((error) => {[m
+[32m+[m[32m        console.error("Market error:", error);[m
+[32m+[m[32m        setMarketError(true);[m
+[32m+[m[32m      });[m
+[32m+[m[32m  }, []);[m
+[32m+[m
+[32m+[m[32m  const marketPrice = market?.close ?? market?.price;[m
+[32m+[m
+   return ([m
+     <footer className="site-footer">[m
+       <div className="footer-container">[m
+ [m
+         <div className="footer-header">[m
+[31m-          <span className="footer-eyebrow">LIVE SYSTEMS</span>[m
+[32m+[m[32m          <span className="footer-eyebrow">[m
+[32m+[m[32m            LIVE SYSTEMS[m
+[32m+[m[32m          </span>[m
+[32m+[m
+           <span className="footer-subtitle">[m
+             Engineering platform telemetry and external data[m
+           </span>[m
+[36m@@ -14,23 +100,73 @@[m [mexport default function Footer() {[m
+ [m
+         <div className="footer-status-grid">[m
+ [m
+[31m-          <div className="status-item market-card">[m
+[31m-            <span className="status-label">MARKETS</span>[m
+[31m-            <span className="status-title">SPY</span>[m
+[32m+[m[32m          {/* MARKET */}[m
+[32m+[m
+[32m+[m[32m          <div className="status-item">[m
+[32m+[m[32m            <span className="status-label">[m
+[32m+[m[32m              MARKETS[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-title">[m
+[32m+[m[32m              SPY[m
+[32m+[m[32m            </span>[m
+[32m+[m
+             <span className="status-value">[m
+[31m-              684.22 <span className="positive">▲ 0.42%</span>[m
+[32m+[m[32m              {marketPrice ? ([m
+[32m+[m[32m                <>[m
+[32m+[m[32m                  ${Number(marketPrice).toFixed(2)}[m
+[32m+[m
+[32m+[m[32m                  {market?.percent_change && ([m
+[32m+[m[32m                    <span[m
+[32m+[m[32m                      className={[m
+[32m+[m[32m                        Number(market.percent_change) >= 0[m
+[32m+[m[32m                          ? "positive"[m
+[32m+[m[32m                          : "negative"[m
+[32m+[m[32m                      }[m
+[32m+[m[32m                    >[m
+[32m+[m[32m                      {Number(market.percent_change) >= 0 ? " ▲ " : " ▼ "}[m
+[32m+[m[32m                      {Math.abs(Number(market.percent_change)).toFixed(2)}%[m
+[32m+[m[32m                    </span>[m
+[32m+[m[32m                  )}[m
+[32m+[m[32m                </>[m
+[32m+[m[32m              ) : marketError ? ([m
+[32m+[m[32m                "Market unavailable"[m
+[32m+[m[32m              ) : ([m
+[32m+[m[32m                "Loading..."[m
+[32m+[m[32m              )}[m
+             </span>[m
+           </div>[m
+ [m
+[31m-          <div className="status-item weather-card">[m
+[31m-            <span className="status-label">WEATHER</span>[m
+[31m-            <span className="status-title">Orlando</span>[m
+[31m-            <span className="status-value">82°F · Clear</span>[m
+[32m+[m[32m          {/* WEATHER */}[m
+[32m+[m
+[32m+[m[32m          <div className="status-item">[m
+[32m+[m[32m            <span className="status-label">[m
+[32m+[m[32m              WEATHER[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-title">[m
+[32m+[m[32m              Local Conditions[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-value">[m
+[32m+[m[32m              {weather[m
+[32m+[m[32m                ? `${Math.round(weather.current.temperature_2m)}°F`[m
+[32m+[m[32m                : weatherError[m
+[32m+[m[32m                  ? "Location unavailable"[m
+[32m+[m[32m                  : "Loading..."}[m
+[32m+[m[32m            </span>[m
+           </div>[m
+ [m
+[31m-          <div className="status-item platform-card">[m
+[31m-            <span className="status-label">PLATFORM</span>[m
+[31m-            <span className="status-title">API</span>[m
+[32m+[m[32m          {/* PLATFORM */}[m
+[32m+[m
+[32m+[m[32m          <div className="status-item">[m
+[32m+[m[32m            <span className="status-label">[m
+[32m+[m[32m              PLATFORM[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-title">[m
+[32m+[m[32m              API[m
+[32m+[m[32m            </span>[m
+ [m
+             <span className="status-value health-value">[m
+               <span className="health-dot" />[m
+[36m@@ -38,10 +174,20 @@[m [mexport default function Footer() {[m
+             </span>[m
+           </div>[m
+ [m
+[31m-          <div className="status-item build-card">[m
+[31m-            <span className="status-label">BUILD</span>[m
+[31m-            <span className="status-title">Production</span>[m
+[31m-            <span className="status-value">✓ Passing</span>[m
+[32m+[m[32m          {/* BUILD */}[m
+[32m+[m
+[32m+[m[32m          <div className="status-item">[m
+[32m+[m[32m            <span className="status-label">[m
+[32m+[m[32m              BUILD[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-title">[m
+[32m+[m[32m              Production[m
+[32m+[m[32m            </span>[m
+[32m+[m
+[32m+[m[32m            <span className="status-value">[m
+[32m+[m[32m              ✓ Passing[m
+[32m+[m[32m            </span>[m
+           </div>[m
+ [m
+         </div>[m
+[1mdiff --git a/frontend/vite.config.ts b/frontend/vite.config.ts[m
+[1mindex 9982072..54cca7f 100644[m
+[1m--- a/frontend/vite.config.ts[m
+[1m+++ b/frontend/vite.config.ts[m
+[36m@@ -1,7 +1,15 @@[m
+[31m-import react from '@vitejs/plugin-react'[m
+[31m-import { defineConfig } from 'vite'[m
+[32m+[m[32mimport { defineConfig } from "vite";[m
+[32m+[m[32mimport react from "@vitejs/plugin-react";[m
+ [m
+[31m-// https://vite.dev/config/[m
+ export default defineConfig({[m
+   plugins: [react()],[m
+[31m-})[m
+[32m+[m
+[32m+[m[32m  server: {[m
+[32m+[m[32m    proxy: {[m
+[32m+[m[32m      "/api": {[m
+[32m+[m[32m        target: "http://localhost:8080",[m
+[32m+[m[32m        changeOrigin: true,[m
+[32m+[m[32m      },[m
+[32m+[m[32m    },[m
+[32m+[m[32m  },[m
+[32m+[m[32m});[m
+\ No newline at end of file[m
