@@ -2,31 +2,36 @@ import './Projects.css'
 
 const projects = [
   {
-    id: 'flight-control',
+    id: 'sentinel-security',
     number: '01',
-    title: 'Real-Time Flight Control',
+    title: 'Sentinel Security',
+    status: 'LIVE',
+    description:
+        'A deployed endpoint security and telemetry platform with authenticated ingestion, persistent alert analytics, real-time event streaming, and operational visibility.',
+    technologies: ['Rust', 'Spring Boot', 'React', 'PostgreSQL', 'Kafka'],
+    href: 'https://sentinel.loganfoster.net',
+    source: 'https://github.com/lfcareers/sentinel-security',
+  },
+  {
+    id: 'flight-control',
+    number: '02',
+    title: 'Embedded Flight Controller Design',
     status: 'IN DEVELOPMENT',
     description:
-      'A C++ control-loop simulation focused on deterministic behavior, telemetry, fault handling, and system testing.',
-    technologies: ['C++', 'Simulation', 'Systems'],
+        'A C++ embedded flight-control project focused on deterministic control loops, telemetry, fault handling, and system validation.',
+    technologies: ['C++', 'Embedded Systems', 'Control Systems'],
+    href: '#flight-control',
   },
   {
     id: 'engineering-platform',
-    number: '02',
+    number: '03',
     title: 'Engineering Platform',
     status: 'LIVE',
     description:
-      'A full-stack engineering platform connecting React, Spring Boot, PostgreSQL, APIs, CI/CD, and cloud infrastructure.',
-    technologies: ['React', 'Spring Boot', 'PostgreSQL'],
-  },
-  {
-    id: 'saferoute',
-    number: '03',
-    title: 'SafeRoute',
-    status: 'PROTOTYPE',
-    description:
-      'A safety-weighted navigation platform designed around routing algorithms, transportation data, and real-world constraints.',
-    technologies: ['GPS', 'Routing', 'Data'],
+        'The full-stack engineering platform behind LoganFoster.net, connecting React, Spring Boot, PostgreSQL, APIs, CI/CD, and cloud infrastructure.',
+    technologies: ['React', 'Spring Boot', 'PostgreSQL', 'CI/CD'],
+    href: 'https://loganfoster.net',
+    source: 'https://github.com/lfcareers/engineering-platform',
   },
 ]
 
@@ -55,7 +60,9 @@ function Projects() {
         {projects.map((project) => (
           <a
             key={project.id}
-            href={`#${project.id}`}
+            href={project.href}
+            target={project.href.startsWith('http') ? '_blank' : undefined}
+            rel={project.href.startsWith('http') ? 'noreferrer' : undefined}
             className="project-card"
           >
             <div className="project-card-visual">
@@ -127,16 +134,31 @@ function Projects() {
             </div>
 
             <div className="project-actions">
-              <button type="button">
-                View Project
-              </button>
-
-              <button
-                type="button"
-                className="secondary-action"
+              <a
+                  href={project.href}
+                  target={project.href.startsWith('http') ? '_blank' : undefined}
+                  rel={project.href.startsWith('http') ? 'noreferrer' : undefined}
               >
-                Architecture
-              </button>
+                View Project
+              </a>
+
+              {project.source ? (
+                  <a
+                      href={project.source}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="secondary-action"
+                  >
+                    View Source
+                  </a>
+              ) : (
+                  <a
+                      href={`#${project.id}`}
+                      className="secondary-action"
+                  >
+                    Architecture
+                  </a>
+              )}
             </div>
           </div>
         </section>
