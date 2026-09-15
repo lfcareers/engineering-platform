@@ -9,14 +9,15 @@ function Home() {
         <div className="hero-content">
 
           <Chip variant="soft">
-            SOFTWARE • SYSTEMS • DATA • AUTOMATION
+            SOFTWARE • SYSTEMS • SECURITY • DATA
           </Chip>
 
           <h1>COMPUTER ENGINEER</h1>
 
           <p className="hero-description">
-            I build software and engineering systems that turn
-            complex requirements into measurable, testable solutions.
+            I design and deploy software, security, and engineering
+            systems that turn complex requirements into measurable,
+            testable solutions.
           </p>
 
           <div className="hero-actions">
@@ -58,18 +59,18 @@ function Home() {
             </div>
 
             <div className="status-row">
-              <span>Frontend</span>
+              <span>Engineering Platform</span>
               <span>● Operational</span>
             </div>
 
             <div className="status-row">
-              <span>Backend</span>
-              <span>● Operational</span>
+              <span>Sentinel Security</span>
+              <span>● Live</span>
             </div>
 
             <div className="status-row">
-              <span>Database</span>
-              <span>● Connected</span>
+              <span>Management API</span>
+              <span>● Operational</span>
             </div>
 
             <div className="status-row">
@@ -87,84 +88,143 @@ function Home() {
       <section className="content-section">
 
         <div className="section-heading">
-          <span className="section-label">01 / SELECTED WORK</span>
-          <h2>Engineering projects with a purpose.</h2>
+          <span className="section-label">
+            01 / SELECTED WORK
+          </span>
+
+          <h2>
+            Engineering systems built beyond the prototype.
+          </h2>
         </div>
 
         <div className="project-grid">
 
-          <Card>
-            <div>
-              <span className="project-number">01</span>
+          {/* SENTINEL SECURITY */}
+          <a
+            href="https://sentinel.loganfoster.net"
+            target="_blank"
+            rel="noreferrer"
+            className="project-card-link"
+          >
+            <Card>
+              <div>
+                <div className="project-card-meta">
+                  <span className="project-number">01</span>
 
-              <h3>Real-Time Flight Control</h3>
+                  <Chip size="sm" variant="soft">
+                    LIVE
+                  </Chip>
+                </div>
 
-              <p>
-                C++ control-loop simulation focused on
-                deterministic behavior, telemetry, fault handling,
-                and system testing.
-              </p>
+                <h3>Sentinel Security</h3>
 
-              <div className="project-tags">
-                <Chip size="sm">C++</Chip>
-                <Chip size="sm">Simulation</Chip>
-                <Chip size="sm">Systems</Chip>
+                <p>
+                  Endpoint security and telemetry platform with
+                  authenticated ingestion, persistent alert analytics,
+                  real-time event streaming, and operational visibility.
+                </p>
+
+                <div className="project-tags">
+                  <Chip size="sm">Rust</Chip>
+                  <Chip size="sm">Spring Boot</Chip>
+                  <Chip size="sm">React</Chip>
+                  <Chip size="sm">PostgreSQL</Chip>
+                  <Chip size="sm">Kafka</Chip>
+                </div>
+
+                <p className="project-link">
+                  Launch Sentinel →
+                </p>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
 
-          <Card>
-            <div>
-              <span className="project-number">02</span>
+          {/* EMBEDDED FLIGHT CONTROLLER */}
+          <a
+            href="/projects#flight-control"
+            className="project-card-link"
+          >
+            <Card>
+              <div>
+                <div className="project-card-meta">
+                  <span className="project-number">02</span>
 
-              <h3>Engineering Platform</h3>
+                  <Chip size="sm" variant="soft">
+                    IN DEVELOPMENT
+                  </Chip>
+                </div>
 
-              <p>
-                A full-stack engineering environment connecting
-                React, Spring Boot, PostgreSQL, APIs, automation,
-                and future engineering applications.
-              </p>
+                <h3>Embedded Flight Controller Design</h3>
 
-              <div className="project-tags">
-                <Chip size="sm">React</Chip>
-                <Chip size="sm">Spring Boot</Chip>
-                <Chip size="sm">PostgreSQL</Chip>
+                <p>
+                  C++ embedded flight-control engineering focused on
+                  deterministic control loops, telemetry, fault handling,
+                  and system validation.
+                </p>
+
+                <div className="project-tags">
+                  <Chip size="sm">C++</Chip>
+                  <Chip size="sm">Embedded Systems</Chip>
+                  <Chip size="sm">Control Systems</Chip>
+                </div>
+
+                <p className="project-link">
+                  Explore Project →
+                </p>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
 
-          <Card>
-            <div>
-              <span className="project-number">03</span>
+          {/* ENGINEERING PLATFORM */}
+          <a
+            href="/projects#engineering-platform"
+            className="project-card-link"
+          >
+            <Card>
+              <div>
+                <div className="project-card-meta">
+                  <span className="project-number">03</span>
 
-              <h3>SafeRoute</h3>
+                  <Chip size="sm" variant="soft">
+                    LIVE
+                  </Chip>
+                </div>
 
-              <p>
-                A safety-weighted navigation concept combining
-                GPS, routing algorithms, transportation data,
-                and real-world constraints.
-              </p>
+                <h3>Engineering Platform</h3>
 
-              <div className="project-tags">
-                <Chip size="sm">GPS</Chip>
-                <Chip size="sm">Routing</Chip>
-                <Chip size="sm">Data</Chip>
+                <p>
+                  The full-stack platform behind LoganFoster.net,
+                  integrating React, Spring Boot, PostgreSQL, APIs,
+                  CI/CD, and cloud infrastructure.
+                </p>
+
+                <div className="project-tags">
+                  <Chip size="sm">React</Chip>
+                  <Chip size="sm">Spring Boot</Chip>
+                  <Chip size="sm">PostgreSQL</Chip>
+                  <Chip size="sm">CI/CD</Chip>
+                </div>
+
+                <p className="project-link">
+                  Explore Platform →
+                </p>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
         </div>
 
       </section>
-
-
       {/* ENGINEERING APPROACH */}
       <section className="content-section approach-section">
 
         <div className="section-heading">
-          <span className="section-label">02 / ENGINEERING APPROACH</span>
+          <span className="section-label">
+            02 / ENGINEERING APPROACH
+          </span>
+
           <h2>Build with intent.</h2>
         </div>
 
@@ -188,7 +248,9 @@ function Home() {
       {/* CTA */}
       <section className="contact-section">
 
-        <span className="section-label">03 / CONTACT</span>
+        <span className="section-label">
+          03 / CONTACT
+        </span>
 
         <h2>
           Have a difficult engineering problem?
