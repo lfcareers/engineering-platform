@@ -1,4 +1,23 @@
 import './About.css'
+import { useEffect } from "react";
+
+function GoFundMeWidget() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.gofundme.com/static/js/embed.js";
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => script.remove();
+  }, []);
+
+  return (
+      <div
+          className="gfm-embed"
+          data-url="https://www.gofundme.com/f/support-logans-ongoing-cml-care/widget/large?attribution_id=sl%3A565d62a6-a2a1-462f-8b48-f6c66d5345e0"
+      />
+  );
+}
 
 const timeline = [
   {
@@ -186,6 +205,42 @@ function About() {
         </p>
       </section>
 
+      {/* PERSONAL CAMPAIGN */}
+      <section id="my-story" className="about-section about-campaign">
+        <div>
+          <span className="about-label">06 / MY STORY</span>
+        </div>
+
+        <div>
+          <h2>Building forward while living with CML.</h2>
+
+          <p>
+            I’ve lived with chronic myeloid leukemia since I was 16.
+            It has shaped my path, but it has also strengthened my drive
+            to build useful technology and keep moving forward.
+          </p>
+
+          <p>
+            I created a personal GoFundMe for anyone who would like to
+            support me through ongoing care and the challenges that come
+            with it. Contributions to this campaign go to me personally,
+            not to Blood Cancer United.
+          </p>
+
+          <GoFundMeWidget />
+
+          <p>
+            <a
+                href="https://gofund.me/729ae17cf"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+              Open my GoFundMe directly ↗
+            </a>
+          </p>
+        </div>
+      </section>
+      
       {/* CTA */}
       <section className="about-contact">
         <span className="about-label">06 / NEXT</span>
