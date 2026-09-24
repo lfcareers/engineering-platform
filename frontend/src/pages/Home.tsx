@@ -1,7 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Button, Card, Chip } from '@heroui/react'
 import { API_BASE_URL } from '../config'
-function Home() {
+
+function SmallGoFundMeWidget() {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://www.gofundme.com/static/js/embed.js'
+    script.defer = true
+    document.body.appendChild(script)
+
+    return () => script.remove()
+  }, [])
+
+  return (
+      <div
+          className="gfm-embed"
+          data-url="https://www.gofundme.com/f/support-logans-ongoing-cml-care/widget/small?attribution_id=sl%3A565d62a6-a2a1-462f-8b48-f6c66d5345e0"
+      />
+  )
+}function Home() {
   type Check = 'responding' | 'check_unavailable' | 'not_configured'
 
   type Snapshot = {
@@ -331,6 +348,21 @@ function Home() {
           Let's Talk
         </Button>
 
+      </section>
+
+      <section className="home-support" aria-label="Support Logan's personal fundraiser">
+        <div>
+          <h2>Support my journey</h2>
+          <p>
+            This is my personal fundraiser for ongoing CML care.
+            Contributions go to me.
+          </p>
+        </div>
+
+        <div className="home-support-widget">
+          <SmallGoFundMeWidget />
+          <a href="/about#my-story">Read my story →</a>
+        </div>
       </section>
 
     </div>
