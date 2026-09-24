@@ -1,231 +1,184 @@
-import { useEffect, useState } from "react";
-import "./Footer.css";
+import { useState } from 'react'
+import { API_BASE_URL } from '../config'
+import { useApiReachability } from '../hooks/useApiReachability'
+import './Footer.css'
 
-type WeatherData = {
-  current: {
-    temperature_2m: number;
-    weather_code: number;
-  };
-};
-
-type MarketData = {
-  symbol?: string;
-  close?: string;
-  price?: string;
-  percent_change?: string;
-  change?: string;
-};
+type Weather = {
+  current?: {
+    temperature_2m?: number
+    precipitation_probability?: number
+  }
+}
 
 export default function Footer() {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [weatherError, setWeatherError] = useState(false);
+  const apiState = useApiReachability()
 
-  const [market, setMarket] = useState<MarketData | null>(null);
-  const [marketError, setMarketError] = useState(false);
+  const [weather, setWeather] = useState<Weather | null>(null)
+  const [weatherState, setWeatherState] = useState<
+      'idle' | 'locating' | 'loading' | 'unavailable'
+  >('idle')
 
-  /*
-   * LOCAL WEATHER
-   */
-  useEffect(() => {
+  function loadLocalWeather() {
     if (!navigator.geolocation) {
-      setWeatherError(true);
-      return;
+      setWeatherState('unavailable')
+      return
     }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+    setWeatherState('locating')
 
-        fetch(`/api/weather?lat=${lat}&lon=${lon}`)
-          .then((response) => {
+    navigator.geolocation.getCurrentPosition(
+        async ({ coords }) => {
+          setWeatherState('loading')
+
+          try {
+            const params = new URLSearchParams({
+              lat: String(coords.latitude),
+              lon: String(coords.longitude),
+            })
+
+            const response = await fetch(
+                `${API_BASE_URL}/api/weather?${params}`
+            )
+
             if (!response.ok) {
-              throw new Error("Weather request failed");
+              throw new Error(`Weather HTTP ${response.status}`)
             }
 
-            return response.json();
-          })
-          .then((data) => {
-            setWeather(data);
-          })
-          .catch((error) => {
-            console.error("Weather error:", error);
-            setWeatherError(true);
-          });
-      },
+            const result: Weather = await response.json()
 
-      (error) => {
-        console.error("Location error:", error);
-        setWeatherError(true);
-      }
-    );
-  }, []);
+            if (
+                typeof result.current?.temperature_2m !== 'number' ||
+                typeof result.current?.precipitation_probability !== 'number'
+            ) {
+              throw new Error('Weather data is incomplete')
+            }
 
-  /*
-   * SPY MARKET DATA
-   */
-  useEffect(() => {
-    fetch("/api/markets/SPY")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Market request failed");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        setMarket(data);
-      })
-      .catch((error) => {
-        console.error("Market error:", error);
-        setMarketError(true);
-      });
-  }, []);
-
-  const marketPrice = market?.close ?? market?.price;
+            setWeather(result)
+          } catch (error) {
+            console.error('Weather request failed:', error)
+            setWeatherState('unavailable')
+          }
+        },
+        () => setWeatherState('unavailable'),
+        { timeout: 10000, maximumAge: 10 * 60 * 1000 }
+    )
+  }
 
   return (
-    <footer className="site-footer">
-      <div className="footer-container">
-
-        <div className="footer-header">
-          <span className="footer-eyebrow">
-            LIVE SYSTEMS
+      <footer className="site-footer">
+        <div className="footer-container">
+          <div className="footer-header">
+            <span className="footer-eyebrow">ENGINEERING PLATFORM</span>
+            <span className="footer-subtitle">
+            Projects and current availability
           </span>
+          </div>
 
-          <span className="footer-subtitle">
-            Engineering platform telemetry and external data
-          </span>
-        </div>
-
-        <div className="footer-status-grid">
-
-          {/* MARKET */}
-
-          <div className="status-item">
-            <span className="status-label">
-              MARKETS
+          <div className="footer-status-grid">
+            {/* API card */}
+            <div className="status-item">
+              <span className="status-label">API CHECK</span>
+              <span className="status-title">Engineering Platform</span>
+              <span className="status-value">
+              {apiState === 'reachable'
+                  ? 'Responding now'
+                  : apiState === 'checking'
+                      ? 'Checking…'
+                      : 'Check unavailable'}
             </span>
+            </div>
 
-            <span className="status-title">
-              SPY
-            </span>
+            {/* Sentinel card */}
+            <div className="status-item">
+              <span className="status-label">PROJECT</span>
+              <span className="status-title">Sentinel Security</span>
+              <a
+                  className="status-value"
+                  href="https://sentinel.loganfoster.net"
+              >
+                View preview →
+              </a>
+            </div>
 
-            <span className="status-value">
-              {marketPrice ? (
-                <>
-                  ${Number(marketPrice).toFixed(2)}
+            {/* Replace the old SOURCE card with this WEATHER card */}
+            <div className="status-item">
+              <span className="status-label">LOCAL WEATHER</span>
+              <span className="status-title">Your current area</span>
 
-                  {market?.percent_change && (
-                    <span
-                      className={
-                        Number(market.percent_change) >= 0
-                          ? "positive"
-                          : "negative"
-                      }
-                    >
-                      {Number(market.percent_change) >= 0 ? " ▲ " : " ▼ "}
-                      {Math.abs(Number(market.percent_change)).toFixed(2)}%
-                    </span>
-                  )}
-                </>
-              ) : marketError ? (
-                "Market unavailable"
+              {typeof weather?.current?.temperature_2m === 'number' &&
+              typeof weather?.current?.precipitation_probability === 'number' ? (
+                  <span className="status-value">
+                {Math.round(weather.current.temperature_2m)}°F ·{' '}
+                    {weather.current.precipitation_probability}% chance of
+                precipitation
+              </span>
               ) : (
-                "Loading..."
+                  <button
+                      className="weather-button"
+                      type="button"
+                      onClick={loadLocalWeather}
+                      disabled={
+                          weatherState === 'locating' ||
+                          weatherState === 'loading'
+                      }
+                  >
+                    {weatherState === 'locating'
+                        ? 'Getting location…'
+                        : weatherState === 'loading'
+                            ? 'Loading weather…'
+                            : weatherState === 'unavailable'
+                                ? 'Unavailable — retry'
+                                : 'Use my location'}
+                  </button>
               )}
-            </span>
+
+              <a
+                  href="https://open-meteo.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                Weather data: Open-Meteo
+              </a>
+            </div>
+
+            {/* Contact card */}
+            <div className="status-item">
+              <span className="status-label">CONTACT</span>
+              <span className="status-title">Opportunities</span>
+              <a className="status-value" href="/contact">
+                Get in touch →
+              </a>
+            </div>
           </div>
 
-          {/* WEATHER */}
+          <div className="footer-bottom">
+            <div className="footer-brand">
+              <span>LF Engineering</span>
+            </div>
 
-          <div className="status-item">
-            <span className="status-label">
-              WEATHER
-            </span>
+            <div className="footer-links">
+              <a
+                  href="https://github.com/lfcareers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
 
-            <span className="status-title">
-              Local Conditions
-            </span>
+              <a
+                  href="https://www.linkedin.com/in/fosterlogan/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
 
-            <span className="status-value">
-              {weather
-                ? `${Math.round(weather.current.temperature_2m)}°F`
-                : weatherError
-                  ? "Location unavailable"
-                  : "Loading..."}
-            </span>
-          </div>
-
-          {/* PLATFORM */}
-
-          <div className="status-item">
-            <span className="status-label">
-              PLATFORM
-            </span>
-
-            <span className="status-title">
-              API
-            </span>
-
-            <span className="status-value health-value">
-              <span className="health-dot" />
-              Healthy
-            </span>
-          </div>
-
-          {/* BUILD */}
-
-          <div className="status-item">
-            <span className="status-label">
-              BUILD
-            </span>
-
-            <span className="status-title">
-              Production
-            </span>
-
-            <span className="status-value">
-              ✓ Passing
-            </span>
-          </div>
-
-        </div>
-
-        <div className="footer-bottom">
-
-          <div className="footer-brand">
-            <span className="health-dot" />
-            <span>LF Engineering</span>
-          </div>
-
-          <div className="footer-links">
-
-            <a
-              href="https://github.com/lfcareers"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/fosterlogan/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-
-            <span className="copyright">
+              <span className="copyright">
               © {new Date().getFullYear()} Logan Foster
             </span>
-
+            </div>
           </div>
-
         </div>
-
-      </div>
-    </footer>
-  );
+      </footer>
+  )
 }

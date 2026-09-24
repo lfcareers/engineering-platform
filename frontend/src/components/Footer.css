@@ -55,6 +55,24 @@
   color: var(--text-primary);
 }
 
+.footer-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .footer-status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .footer-status-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* LIVE DATA GRID */
 
