@@ -340,3 +340,176 @@ a {
     padding: 90px 0 110px;
   }
 }
+/* Project routes: subtle color that points to separate ecosystems */
+
+.project-card-link {
+  --route-color: #e3b624;
+  display: block;
+  border-radius: 18px;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.route-sentinel { --route-color: #33c6a7; }
+.route-flight   { --route-color: #84a5ff; }
+.route-platform { --route-color: #e3b624; }
+
+.project-card-link > [data-slot="base"] {
+  height: 100%;
+  border: 1px solid color-mix(in srgb, var(--route-color) 32%, var(--border));
+  background:
+          radial-gradient(
+                  circle at 92% 4%,
+                  color-mix(in srgb, var(--route-color) 14%, transparent),
+                  transparent 47%
+          ),
+          var(--bg-elevated);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.project-card-link .project-number,
+.project-card-link .project-link {
+  color: var(--route-color);
+  opacity: 1;
+}
+
+.project-card-link:is(:hover, :focus-visible) {
+  transform: translateY(-5px);
+  outline: none;
+}
+
+.project-card-link:is(:hover, :focus-visible) > [data-slot="base"] {
+  border-color: var(--route-color);
+  box-shadow: 0 16px 45px color-mix(in srgb, var(--route-color) 15%, transparent);
+}
+
+.project-card-link:focus-visible > [data-slot="base"] {
+  outline: 2px solid var(--route-color);
+  outline-offset: 4px;
+}
+
+/* Abstract systems sculpture: the same three route colors */
+
+.systems-sculpture {
+  position: relative;
+  height: 190px;
+  margin: 0 0 30px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background:
+          radial-gradient(ellipse at 48% 55%, rgba(51, 198, 167, 0.10), transparent 36%),
+          radial-gradient(ellipse at 64% 45%, rgba(132, 165, 255, 0.10), transparent 38%),
+          var(--bg-surface);
+}
+
+.sculpture-orbit,
+.sculpture-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-24deg);
+}
+
+.sculpture-orbit {
+  width: min(55vw, 520px);
+  height: 104px;
+  border: 2px solid;
+}
+
+.orbit-one {
+  border-color: rgba(51, 198, 167, 0.75);
+  transform: translate(-50%, -50%) rotate(-24deg);
+}
+
+.orbit-two {
+  width: min(48vw, 450px);
+  border-color: rgba(132, 165, 255, 0.7);
+  transform: translate(-50%, -50%) rotate(25deg);
+}
+
+.orbit-three {
+  width: min(38vw, 350px);
+  border-color: rgba(227, 182, 36, 0.65);
+  transform: translate(-50%, -50%) rotate(78deg);
+}
+
+.sculpture-core {
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(135deg, #33c6a7, #84a5ff 55%, #e3b624);
+  box-shadow: 0 0 55px rgba(132, 165, 255, 0.22);
+}
+
+@media (max-width: 600px) {
+  .systems-sculpture { height: 155px; }
+  .sculpture-orbit { width: 260px; }
+  .orbit-two { width: 220px; }
+  .orbit-three { width: 170px; }
+  .sculpture-core { width: 56px; height: 56px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-link,
+  .project-card-link > [data-slot="base"] {
+    transition: none;
+  }
+}
+
+/* Project snapshot */
+
+.snapshot-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+          radial-gradient(
+                  circle at 100% 0%,
+                  rgba(51, 198, 167, 0.09),
+                  transparent 48%
+          ),
+          var(--bg-elevated);
+}
+
+.snapshot-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(#33c6a7, #84a5ff, #e3b624);
+}
+
+.snapshot-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.snapshot-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+
+.snapshot-pill--responding {
+  border-color: rgba(51, 198, 167, 0.35);
+  color: var(--text-primary);
+}
+
+.snapshot-pill--responding .snapshot-pill-dot {
+  background: #33c6a7;
+}
+
+.snapshot-pill--unavailable .snapshot-pill-dot {
+  background: #94a3b8;
+}

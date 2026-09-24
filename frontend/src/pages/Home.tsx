@@ -1,6 +1,58 @@
+import { useEffect, useState } from 'react'
 import { Button, Card, Chip } from '@heroui/react'
-
+import { API_BASE_URL } from '../config'
 function Home() {
+  type Check = 'responding' | 'check_unavailable' | 'not_configured'
+
+  type Snapshot = {
+    api: Check
+    database: Check
+    sentinelSite: Check
+    sentinelApi: Check
+    checkedAt: string
+  }
+
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(null)
+  const [requestFailed, setRequestFailed] = useState(false)
+
+  useEffect(() => {
+    let active = true
+
+    async function check() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/status`, {
+          cache: 'no-store',
+        })
+        if (!response.ok) throw new Error(`Status HTTP ${response.status}`)
+
+        const result: Snapshot = await response.json()
+        if (active) {
+          setSnapshot(result)
+          setRequestFailed(false)
+        }
+      } catch {
+        if (active) {
+          setSnapshot(null)
+          setRequestFailed(true)
+        }
+      }
+    }
+
+    void check()
+    const interval = window.setInterval(() => void check(), 60_000)
+
+    return () => {
+      active = false
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  function label(check: Check | undefined) {
+    if (check === 'responding') return '● Responding'
+    if (check === 'not_configured') return '○ Not configured'
+    if (check === 'check_unavailable') return '○ Check unavailable'
+    return requestFailed ? '○ Check unavailable' : '○ Checking'
+  }
   return (
     <div className="home-page">
 
@@ -44,43 +96,47 @@ function Home() {
 
         </div>
 
-        {/* SYSTEM STATUS */}
+        {/* PROJECT SNAPSHOT */}
         <Card>
           <div>
             <div className="status-header">
-              <span>SYSTEM STATUS</span>
+              <span>PROJECT SNAPSHOT</span>
 
-              <Chip
-                size="sm"
-                variant="soft"
-              >
-                ONLINE
+              <Chip size="sm" variant="soft">
+                {snapshot
+                    ? 'CHECK RESULTS'
+                    : requestFailed
+                        ? 'CHECK UNAVAILABLE'
+                        : 'CHECKING'}
               </Chip>
             </div>
 
             <div className="status-row">
-              <span>Engineering Platform</span>
-              <span>● Operational</span>
+              <span>Engineering Platform API</span>
+              <span>{label(snapshot?.api)}</span>
             </div>
 
             <div className="status-row">
-              <span>Sentinel Security</span>
-              <span>● Live</span>
+              <span>Portfolio database</span>
+              <span>{label(snapshot?.database)}</span>
             </div>
 
             <div className="status-row">
-              <span>Management API</span>
-              <span>● Operational</span>
+              <span>Sentinel website</span>
+              <span>{label(snapshot?.sentinelSite)}</span>
+            </div>
+
+            <div className="status-row">
+              <span>Sentinel API endpoint</span>
+              <span>{label(snapshot?.sentinelApi)}</span>
             </div>
 
             <div className="status-row">
               <span>Engineering Lab</span>
               <span>○ Building</span>
             </div>
-
           </div>
         </Card>
-
       </section>
 
 
@@ -104,7 +160,7 @@ function Home() {
             href="https://sentinel.loganfoster.net"
             target="_blank"
             rel="noreferrer"
-            className="project-card-link"
+            className="project-card-link route-sentinel"
           >
             <Card>
               <div>
@@ -143,7 +199,7 @@ function Home() {
           {/* EMBEDDED FLIGHT CONTROLLER */}
           <a
             href="/projects#flight-control"
-            className="project-card-link"
+            className="project-card-link route-flight"
           >
             <Card>
               <div>
@@ -180,7 +236,7 @@ function Home() {
           {/* ENGINEERING PLATFORM */}
           <a
             href="/projects#engineering-platform"
-            className="project-card-link"
+            className="project-card-link route-platform"
           >
             <Card>
               <div>
@@ -215,7 +271,12 @@ function Home() {
           </a>
 
         </div>
-
+        <div className="systems-sculpture" aria-hidden="true">
+          <span className="sculpture-orbit orbit-one" />
+          <span className="sculpture-orbit orbit-two" />
+          <span className="sculpture-orbit orbit-three" />
+          <span className="sculpture-core" />
+        </div>
       </section>
       {/* ENGINEERING APPROACH */}
       <section className="content-section approach-section">
@@ -241,7 +302,6 @@ function Home() {
           <span>→</span>
           <span>IMPROVE</span>
         </div>
-
       </section>
 
 
