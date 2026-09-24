@@ -48,4 +48,4 @@ jobs:
           cache: maven
 
       - name: Run backend tests
-        run: ./mvnw -f backend/pom.xml test
+        run: sh ./mvnw -f backend/pom.xml test
